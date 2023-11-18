@@ -23,14 +23,18 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 # 源文件列表
 aux_source_directory(. PROJECT_SOURCES)
 
-# 资源文件
+# 图标资源文件
 set(RESOURCE_FILES "resources.rc")
+
+# 其他资源文件
+set(QRC_FILES "res.qrc")
 
 # 使用"qt_add_executable"来创建可执行文件。
 qt_add_executable(${PROJECT_NAME}
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
     ${RESOURCE_FILES}
+    ${QRC_FILES}
 )
 # 构建Qt应用程序时进行最后的可执行文件处理
 qt_finalize_executable(${PROJECT_NAME})
