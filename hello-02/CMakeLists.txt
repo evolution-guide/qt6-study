@@ -1,62 +1,31 @@
+# 设置所需的最低CMake版本为3.5。
 cmake_minimum_required(VERSION 3.5)
 
-project(hello-02 VERSION 0.1 LANGUAGES CXX)
+# 设置项目名称为"helloqt_multi"，版本号为0.1，使用的编程语言为C++。
+project(helloqt_multi VERSION 0.1 LANGUAGES CXX)
 
+# 启用自动UI编译
 set(CMAKE_AUTOUIC ON)
+# 自动元对象编译
 set(CMAKE_AUTOMOC ON)
+# 自动资源编译
 set(CMAKE_AUTORCC ON)
 
+# 设置C++标准为C++17，并要求编译器支持此标准。
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+# CMake尝试查找并加载Qt6，同时CMake将要求加载Widgets模块
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
+# 根据第一个find_package函数中找到的QT版本来引用具体的模块
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-)
+# 图标资源文件
+set(RESOURCE_FILES ${PROJECT_SOURCE_DIR}/resources.rc)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(hello-02
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET hello-02 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(hello-02 SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(hello-02
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+# 其他资源文件
+set(QRC_FILES ${PROJECT_SOURCE_DIR}/res.qrc)
 
-target_link_libraries(hello-02 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+set(person_lib_name person)
 
-set_target_properties(hello-02 PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-install(TARGETS hello-02
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(hello-02)
-endif()
+add_subdirectory(src)
