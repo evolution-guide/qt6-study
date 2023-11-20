@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 将Qt模块链接到目标可执行文件或动态库。
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    # ${person_lib_name}
+    ${person_lib_name}
     Qt${QT_VERSION_MAJOR}::Widgets
 )
 

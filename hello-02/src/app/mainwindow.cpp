@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <person.h>
 
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -21,12 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     btn1->setFixedSize(90,27);
     layout->addWidget(btn1);
     connect(btn1,&QPushButton::clicked,[](){
-//        Person * p = new Person();
-//        qDebug() << p->sayHello();
+        Person * p = new Person();
+        qDebug() << p->sayHello();
         QMessageBox msgBox;
         msgBox.setText("使用动态库");
-//        msgBox.setInformativeText(p->sayHello());
-        msgBox.setInformativeText("hello world");
+        msgBox.setInformativeText(p->sayHello());
         msgBox.exec();
     });
 
